@@ -1,4 +1,7 @@
  
+# miracle framework分布式事务解决方案
+
+https://github.com/SevenPlusPlus/my_architecture_road/blob/master/chapter7.md
 
 ## 1.环境条件
 ### 引入依赖包
