@@ -3,7 +3,7 @@
 详见我的架构之路中的文章：
 https://github.com/SevenPlusPlus/my_architecture_road/blob/master/chapter7.md
 
-## 用法说明
+## 分布式事务消费对账方案用法说明
 ### 引入依赖包
 
 ```
