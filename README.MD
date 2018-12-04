@@ -1,25 +1,21 @@
  
 # miracle framework分布式事务解决方案
-
+详见我的架构之路中的文章：
 https://github.com/SevenPlusPlus/my_architecture_road/blob/master/chapter7.md
 
-## 1.环境条件
+## 用法说明
 ### 引入依赖包
-
-&ensp;&ensp;使用版本管理器melot-common-parent 1.1.3以上，单独引用的话需要
-kkrpc 1.1.8以上，kk-transaction-hist  2.0.3以上。
-
 
 ```
 <dependency>
-	<groupId>com.melot</groupId>
-	<artifactId>melot-transaction-log</artifactId>
+	<groupId>com.miracle</groupId>
+	<artifactId>miracle-transaction-log</artifactId>
 	<version>1.0.0</version>
 </dependency>
 ```
 ### spring环境
 
-&ensp;&ensp;需要使用```spring-boot```启动，底层mq使用了```melot-mq-starter```。另外，启动类需要设置扫描```@com.melot```，启用切面类。(使用传统```aop:aspect```开启也是可以的，这对所有切面通用)
+&ensp;&ensp;需要使用```spring-boot```启动，底层mq使用了```miracle-mq-starter```。另外，启动类需要设置扫描```@com.miracle```，启用切面类。(使用传统```aop:aspect```开启也是可以的，这对所有切面通用)
 
 ## 2.注解使用
 
@@ -52,8 +48,8 @@ propagation表示事务传播属性，其值使用枚举类Propagation，含义�
 
 &ensp;&ensp;类似spring事务，可以在spring-boot的application.properties设置方法事务属性管理。
 ```
-melot.transaction.attributes.set*=PROPAGATION_REQUIRED
-melot.transaction.attributes.get*=PROPAGATION_NEVER
+miracle.transaction.attributes.set*=PROPAGATION_REQUIRED
+miracle.transaction.attributes.get*=PROPAGATION_NEVER
 ```
 根据方法名匹配Propagation，对于一个类，同时使用了@ClassTransactional和@LogTransactional，其事务传播属性使用优先级如下
 ```
@@ -62,7 +58,7 @@ melot.transaction.attributes.get*=PROPAGATION_NEVER
 
 对于jdk动态代理生成的实现类，由于注解是无法被接口实现类继承，重写的方法也无法继承注解，aop是拦截不到的，例如mybatis mapper。对于以上情况，如果需要添加埋点，可以使用```LogAopMaker```,让接口继承这个标记类，其所有的实现类，子类都能被aop所拦截。
 ```
-import com.melot.common.transaction.log.aop.LogAopMaker;
+import com.miracle.common.transaction.log.aop.LogAopMaker;
 
 @ClassTransactional(module="mybatis")
 public interface DsDao extends LogAopMaker{
@@ -75,7 +71,5 @@ public interface DsDao extends LogAopMaker{
 
 ## 4.对账中心
 
-&ensp;&ensp;启动正常即可在```http://10.0.3.28:10001/kk-transaction-console```查看流水记录
-```帐号密码:admin 12345```
+通过事务消费对账中心查看异常事务流水记录并人工干预解决
 
-![img](http://10.0.16.6/qijia.wang/melot-transaction/raw/master/sources/b7GPyQrCjO.gif)
