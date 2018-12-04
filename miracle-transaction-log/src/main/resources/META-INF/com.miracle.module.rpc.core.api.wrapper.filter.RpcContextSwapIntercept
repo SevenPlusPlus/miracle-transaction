@@ -1,0 +1,1 @@
+logtransaction=com.miracle.common.transaction.log.context.intercept.LogTransactionIntercept

@@ -1,0 +1,1 @@
+transactionretry=com.miracle.common.transaction.log.cluster.retry.LogTransactionClusterRetryStrategy
